@@ -1,22 +1,22 @@
 import { useEffect, useRef } from 'react';
-import { createMidday } from './core';
-import type { MiddayOptions, MiddayInstance } from './types';
+import { createMidnight } from './core';
+import type { MidnightOptions, MidnightInstance } from './types';
 
 /**
- * React hook for midday.js (auto mode).
+ * React hook for midnight.js (auto mode).
  * Initializes on mount, destroys on unmount.
- * Cloning happens client-side — safe for SSR.
+ * Cloning happens client-side - safe for SSR.
  */
-export function useMidday(
+export function useMidnight(
   elementRef: React.RefObject<HTMLElement | null>,
-  options?: MiddayOptions,
-): React.RefObject<MiddayInstance | null> {
-  const instanceRef = useRef<MiddayInstance | null>(null);
+  options?: MidnightOptions,
+): React.RefObject<MidnightInstance | null> {
+  const instanceRef = useRef<MidnightInstance | null>(null);
 
   useEffect(() => {
     if (!elementRef.current) return;
 
-    instanceRef.current = createMidday(elementRef.current, options);
+    instanceRef.current = createMidnight(elementRef.current, options);
 
     return () => {
       instanceRef.current?.destroy();

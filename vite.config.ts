@@ -9,7 +9,7 @@ export default defineConfig({
     emptyOutDir: true,
     lib: {
       entry: {
-        midday: resolve(__dirname, 'src/index.ts'),
+        midnight: resolve(__dirname, 'src/index.ts'),
         react: resolve(__dirname, 'src/react.ts'),
         vue: resolve(__dirname, 'src/vue.ts'),
         svelte: resolve(__dirname, 'src/svelte.ts'),

@@ -1,21 +1,21 @@
 import type {
-  MiddayOptions,
-  MiddayInstance,
+  MidnightOptions,
+  MidnightInstance,
   VariantState,
   Engine,
 } from './types';
 import { scanSections } from './utils';
 import { createEngine } from './engine';
 
-const VARIANT_ATTR = 'data-midday-variant';
+const VARIANT_ATTR = 'data-midnight-variant';
 const DEFAULT_NAME = 'default';
 
-export function createMidday(
+export function createMidnight(
   element: HTMLElement,
-  options: MiddayOptions = {},
-): MiddayInstance {
+  options: MidnightOptions = {},
+): MidnightInstance {
   const { onChange } = options;
-  const instanceName = options.name ?? (element.getAttribute('data-midday-element') || undefined);
+  const instanceName = options.name ?? (element.getAttribute('data-midnight-element') || undefined);
 
   const originalOverflow = element.style.overflow;
 
@@ -53,7 +53,7 @@ export function createMidday(
     ghost.appendChild(template.cloneNode(true));
     element.appendChild(ghost);
 
-    // Build default wrapper last — uses original nodes (preserves event listeners)
+    // Build default wrapper last - uses original nodes (preserves event listeners)
     const defaultVariant = createWrapper(DEFAULT_NAME, template, false);
 
     element.appendChild(defaultVariant.wrapper);
