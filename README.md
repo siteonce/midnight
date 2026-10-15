@@ -2,7 +2,7 @@
 
 [![npm version](https://img.shields.io/npm/v/@siteonce/midnight)](https://www.npmjs.com/package/@siteonce/midnight)
 [![npm bundle size](https://img.shields.io/bundlephobia/minzip/@siteonce/midnight)](https://bundlephobia.com/package/@siteonce/midnight)
-[![CI](https://github.com/marcwiest/midday.js/actions/workflows/ci.yml/badge.svg)](https://github.com/marcwiest/midday.js/actions/workflows/ci.yml)
+[![CI](https://github.com/siteonce/midnight/actions/workflows/ci.yml/badge.svg)](https://github.com/siteonce/midnight/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 Fixed headers (or any fixed/sticky element) that change style as page sections scroll beneath them, with a pixel-perfect wipe at every section boundary.
@@ -11,7 +11,7 @@ A modern, dependency-free rewrite inspired by Aerolab's [midnight.js](https://gi
 
 **~1 kB gzipped** (auto mode) | TypeScript | Adapters for React, Vue, Svelte and Solid
 
-**[Live Demo](https://marcwiest.github.io/midday.js/)**
+**[Live Demo](https://siteonce.github.io/midnight/)**
 
 ## Why a rewrite
 

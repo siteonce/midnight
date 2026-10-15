@@ -7,11 +7,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/marcwiest/midday.js.git"
+    "url": "git+https://github.com/siteonce/midnight.git"
   },
-  "homepage": "https://github.com/marcwiest/midday.js#readme",
+  "homepage": "https://github.com/siteonce/midnight#readme",
   "bugs": {
-    "url": "https://github.com/marcwiest/midday.js/issues"
+    "url": "https://github.com/siteonce/midnight/issues"
   },
   "type": "module",
   "main": "./dist/midnight.umd.js",
