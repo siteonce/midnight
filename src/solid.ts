@@ -1,22 +1,22 @@
 import { onMount, onCleanup } from 'solid-js';
-import { createMidday as createMiddayCore } from './core';
-import type { MiddayOptions, MiddayInstance } from './types';
+import { createMidnight as createMidnightCore } from './core';
+import type { MidnightOptions, MidnightInstance } from './types';
 
 /**
- * Solid primitive for midday.js (auto mode).
+ * Solid primitive for midnight.js (auto mode).
  * Initializes on mount, cleans up on disposal.
- * Cloning happens client-side — safe for SSR.
+ * Cloning happens client-side - safe for SSR.
  */
-export function createMidday(
+export function createMidnight(
   elementAccessor: () => HTMLElement | null,
-  options?: MiddayOptions,
-): () => MiddayInstance | null {
-  let instance: MiddayInstance | null = null;
+  options?: MidnightOptions,
+): () => MidnightInstance | null {
+  let instance: MidnightInstance | null = null;
 
   onMount(() => {
     const el = elementAccessor();
     if (!el) return;
-    instance = createMiddayCore(el, options);
+    instance = createMidnightCore(el, options);
   });
 
   onCleanup(() => {
@@ -28,20 +28,20 @@ export function createMidday(
 }
 
 /**
- * Solid directive for midday.js (auto mode).
- * Usage: <header use:midday> or <header use:midday={{ onChange }}>
+ * Solid directive for midnight.js (auto mode).
+ * Usage: <header use:midnight> or <header use:midnight={{ onChange }}>
  *
  * TypeScript: extend JSX.DirectiveFunctions in your app:
  *   declare module "solid-js" {
  *     namespace JSX {
  *       interface DirectiveFunctions {
- *         midday: typeof import('midday.js/solid').midday;
+ *         midnight: typeof import('midnight.js/solid').midnight;
  *       }
  *     }
  *   }
  */
-export function midday(el: HTMLElement, accessor: () => MiddayOptions | undefined): void {
-  const instance = createMiddayCore(el, accessor());
+export function midnight(el: HTMLElement, accessor: () => MidnightOptions | undefined): void {
+  const instance = createMidnightCore(el, accessor());
 
   onCleanup(() => {
     instance.destroy();

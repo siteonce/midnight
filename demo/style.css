@@ -101,7 +101,7 @@ header a:hover {
   background: #f5f5f5;
 }
 
-/* --- Dock Variants (headless — each has different markup) --- */
+/* --- Dock Variants (headless - each has different markup) --- */
 .dock-variant {
   position: absolute;
   top: 0;
@@ -164,27 +164,27 @@ header a:hover {
 }
 
 /* --- Variant Styles (shared by header and dock) --- */
-[data-midday-variant="default"] {
+[data-midnight-variant="default"] {
   background: white;
   color: #111;
 }
 
-[data-midday-variant="dark"] {
+[data-midnight-variant="dark"] {
   background: #111;
   color: white;
 }
 
-[data-midday-variant="accent"] {
+[data-midnight-variant="accent"] {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
 }
 
-[data-midday-variant="inverted"] {
+[data-midnight-variant="inverted"] {
   background: #111;
   color: #0ff;
 }
 
-[data-midday-variant="expanded"] {
+[data-midnight-variant="expanded"] {
   background: #065f46;
   color: #d1fae5;
 }

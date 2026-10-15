@@ -1,24 +1,24 @@
-import { createMidday } from './core';
-import type { MiddayOptions, MiddayInstance } from './types';
+import { createMidnight } from './core';
+import type { MidnightOptions, MidnightInstance } from './types';
 
 /**
- * Svelte action for midday.js (auto mode).
+ * Svelte action for midnight.js (auto mode).
  * Initializes when the element mounts, destroys when it unmounts.
- * Cloning happens client-side — safe for SSR.
+ * Cloning happens client-side - safe for SSR.
  *
- * Usage: <header use:midday> or <header use:midday={{ onChange }}>
+ * Usage: <header use:midnight> or <header use:midnight={{ onChange }}>
  */
-export function midday(
+export function midnight(
   node: HTMLElement,
-  options?: MiddayOptions,
-): { update: (opts?: MiddayOptions) => void; destroy: () => void } {
-  let instance: MiddayInstance | null = createMidday(node, options);
+  options?: MidnightOptions,
+): { update: (opts?: MidnightOptions) => void; destroy: () => void } {
+  let instance: MidnightInstance | null = createMidnight(node, options);
 
   return {
-    update(newOptions?: MiddayOptions) {
+    update(newOptions?: MidnightOptions) {
       if (newOptions !== undefined) {
         instance?.destroy();
-        instance = createMidday(node, newOptions);
+        instance = createMidnight(node, newOptions);
       } else {
         instance?.refresh();
       }

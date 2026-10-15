@@ -148,7 +148,7 @@ export function createEngine(config: EngineConfig): Engine {
           progress: 1,
         });
       } else {
-        // Partial coverage — show default in the gap.
+        // Partial coverage - show default in the gap.
         // Scale insets proportionally to default variant height.
         const gapAbove = coverageMin;
         const gapBelow = elHeight - coverageMax;

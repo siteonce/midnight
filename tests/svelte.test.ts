@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { midday } from '../src/svelte';
+import { midnight } from '../src/svelte';
 import { mockRect, setScrollY } from './helpers';
 
 function setupHeader(): HTMLElement {
@@ -12,13 +12,13 @@ function setupHeader(): HTMLElement {
 
 function addSection(variant: string) {
   const section = document.createElement('section');
-  section.setAttribute('data-midday-section', variant);
+  section.setAttribute('data-midnight-section', variant);
   mockRect(section, { top: 500, height: 400 });
   document.body.appendChild(section);
   return section;
 }
 
-describe('svelte adapter — midday action', () => {
+describe('svelte adapter - midnight action', () => {
   beforeEach(() => {
     document.body.innerHTML = '';
     setScrollY(0);
@@ -27,10 +27,10 @@ describe('svelte adapter — midday action', () => {
   it('creates instance on call', () => {
     const header = setupHeader();
     addSection('dark');
-    const action = midday(header);
+    const action = midnight(header);
 
     expect(
-      header.querySelectorAll('[data-midday-variant]').length,
+      header.querySelectorAll('[data-midnight-variant]').length,
     ).toBeGreaterThan(0);
     action.destroy();
   });
@@ -38,15 +38,15 @@ describe('svelte adapter — midday action', () => {
   it('update() destroys old instance and recreates', () => {
     const header = setupHeader();
     addSection('dark');
-    const action = midday(header);
+    const action = midnight(header);
 
-    expect(header.querySelectorAll('[data-midday-variant]')).toHaveLength(2);
+    expect(header.querySelectorAll('[data-midnight-variant]')).toHaveLength(2);
 
     // Add another section, then update
     addSection('light');
     action.update();
 
-    expect(header.querySelectorAll('[data-midday-variant]')).toHaveLength(3);
+    expect(header.querySelectorAll('[data-midnight-variant]')).toHaveLength(3);
     action.destroy();
   });
 
@@ -54,7 +54,7 @@ describe('svelte adapter — midday action', () => {
     const header = setupHeader();
     addSection('dark');
     const onChange = () => {};
-    const action = midday(header);
+    const action = midnight(header);
 
     // Should not throw when updating with new options
     action.update({ onChange });
@@ -64,13 +64,13 @@ describe('svelte adapter — midday action', () => {
   it('update() without args preserves DOM mutations via refresh()', () => {
     const header = setupHeader();
     addSection('dark');
-    const action = midday(header);
+    const action = midnight(header);
 
     // Initial: default + dark
-    expect(header.querySelectorAll('[data-midday-variant]')).toHaveLength(2);
+    expect(header.querySelectorAll('[data-midnight-variant]')).toHaveLength(2);
 
     // Mutate element content before refresh
-    header.querySelector('[data-midday-variant="default"]')!.innerHTML =
+    header.querySelector('[data-midnight-variant="default"]')!.innerHTML =
       '<span>Updated Logo</span>';
 
     // Add another section, then update without args (triggers refresh)
@@ -78,20 +78,20 @@ describe('svelte adapter — midday action', () => {
     action.update();
 
     // Should pick up the new section
-    expect(header.querySelectorAll('[data-midday-variant]')).toHaveLength(3);
+    expect(header.querySelectorAll('[data-midnight-variant]')).toHaveLength(3);
     action.destroy();
   });
 
   it('destroy() removes variant wrappers', () => {
     const header = setupHeader();
     addSection('dark');
-    const action = midday(header);
+    const action = midnight(header);
 
     expect(
-      header.querySelectorAll('[data-midday-variant]').length,
+      header.querySelectorAll('[data-midnight-variant]').length,
     ).toBeGreaterThan(0);
 
     action.destroy();
-    expect(header.querySelectorAll('[data-midday-variant]')).toHaveLength(0);
+    expect(header.querySelectorAll('[data-midnight-variant]')).toHaveLength(0);
   });
 });

@@ -4,14 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex, nofollow" />
-  <title>midday.js — Demo</title>
+  <title>midnight.js - Demo</title>
   <link rel="stylesheet" href="./style.css" />
 </head>
 <body>
 
-  <header data-midday-element="top">
+  <header data-midnight-element="top">
     <nav>
-      <div class="logo">midday.js</div>
+      <div class="logo">midnight.js</div>
       <ul>
         <li><a href="#hero">Home</a></li>
         <li><a href="#about">About</a></li>
@@ -53,17 +53,17 @@
     </div>
   </nav>
 
-  <section id="hero" class="hero" data-midday-section="dark">
+  <section id="hero" class="hero" data-midnight-section="dark">
     <h2>Hero Section</h2>
-    <p>Both header and dock use the "dark" variant here (no target — applies to all).</p>
+    <p>Both header and dock use the "dark" variant here (no target - applies to all).</p>
   </section>
 
   <section id="about" class="content">
     <h2>About Section</h2>
-    <p>No data-midday-section attribute — both bars fall back to their "default" variant.</p>
+    <p>No data-midnight-section attribute - both bars fall back to their "default" variant.</p>
   </section>
 
-  <section class="accent-section" data-midday-section="accent" data-midday-target="top bottom">
+  <section class="accent-section" data-midnight-section="accent" data-midnight-target="top bottom">
     <h2>Accent Section</h2>
     <p>Only the top header changes to "accent" here. The bottom dock stays default (target="top").</p>
   </section>
@@ -73,9 +73,9 @@
     <p>No variant specified. Both bars return to default.</p>
   </section>
 
-  <section class="dark-section" data-midday-section="inverted" data-midday-target="top bottom">
+  <section class="dark-section" data-midnight-section="inverted" data-midnight-target="top bottom">
     <h2>Inverted Section</h2>
-    <p>Both bars change to "inverted" — targeting both explicitly (target="top bottom").</p>
+    <p>Both bars change to "inverted" - targeting both explicitly (target="top bottom").</p>
   </section>
 
   <section id="work" class="content">
@@ -83,29 +83,29 @@
     <p>Back to the default variant again. Scroll up and down to see the transitions.</p>
   </section>
 
-  <section class="hero" data-midday-section="dark" data-midday-target="bottom">
+  <section class="hero" data-midnight-section="dark" data-midnight-target="bottom">
     <h2>Bottom-only Dark Section</h2>
     <p>Only the bottom dock changes to "dark" here. The top header stays default (target="bottom").</p>
   </section>
 
-  <section id="contact" class="expanded-section" data-midday-section="expanded" data-midday-target="top bottom">
+  <section id="contact" class="expanded-section" data-midnight-section="expanded" data-midnight-target="top bottom">
     <h2>Expanded Section</h2>
-    <p>Both bars use "expanded" — the dock variant is taller than its container, with extra height revealed as the section scrolls past.</p>
+    <p>Both bars use "expanded" - the dock variant is taller than its container, with extra height revealed as the section scrolls past.</p>
   </section>
 
   <script type="module">
-    import { midday, middayHeadless } from '../src/index.ts';
+    import { midnight, midnightHeadless } from '../src/index.ts';
 
     const progressDefault = document.getElementById('progress-default');
     const progressDark = document.getElementById('progress-dark');
 
-    midday(document.querySelector('[data-midday-element="top"]'), {
+    midnight(document.querySelector('[data-midnight-element="top"]'), {
       onChange: (variants) => {
         console.log('Top (auto):', variants);
       },
     });
 
-    middayHeadless({
+    midnightHeadless({
       element: document.querySelector('.dock'),
       variants: {
         default: document.getElementById('dock-default'),
@@ -129,7 +129,7 @@
     // variant's clip-path blocks hit-testing when it's clipped. Clicks in
     // the header area still fire on document (targeting the <header> itself),
     // so we match click coordinates against interactive element rects.
-    const header = document.querySelector('[data-midday-element="top"]');
+    const header = document.querySelector('[data-midnight-element="top"]');
     const panel = document.getElementById('dropdown-panel');
 
     function hitTest(e, selector) {

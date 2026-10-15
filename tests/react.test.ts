@@ -9,7 +9,7 @@ vi.mock('react', () => ({
   useRef: vi.fn((initial: unknown) => ({ current: initial })),
 }));
 
-import { useMidday } from '../src/react';
+import { useMidnight } from '../src/react';
 import { mockRect, setScrollY } from './helpers';
 
 function setupHeader(): HTMLElement {
@@ -19,14 +19,14 @@ function setupHeader(): HTMLElement {
   document.body.appendChild(header);
 
   const section = document.createElement('section');
-  section.setAttribute('data-midday-section', 'dark');
+  section.setAttribute('data-midnight-section', 'dark');
   mockRect(section, { top: 500, height: 400 });
   document.body.appendChild(section);
 
   return header;
 }
 
-describe('react adapter — useMidday hook', () => {
+describe('react adapter - useMidnight hook', () => {
   beforeEach(() => {
     document.body.innerHTML = '';
     setScrollY(0);
@@ -35,14 +35,14 @@ describe('react adapter — useMidday hook', () => {
 
   it('registers a useEffect', () => {
     const header = setupHeader();
-    useMidday({ current: header } as any);
+    useMidnight({ current: header } as any);
 
     expect(effectSetup).toBeTypeOf('function');
   });
 
   it('creates instance when effect runs', () => {
     const header = setupHeader();
-    const instanceRef = useMidday({ current: header } as any);
+    const instanceRef = useMidnight({ current: header } as any);
 
     // Effect hasn't run yet
     expect(instanceRef.current).toBeNull();
@@ -52,19 +52,19 @@ describe('react adapter — useMidday hook', () => {
 
     expect(instanceRef.current).not.toBeNull();
     expect(
-      header.querySelectorAll('[data-midday-variant]').length,
+      header.querySelectorAll('[data-midnight-variant]').length,
     ).toBeGreaterThan(0);
   });
 
   it('skips init when elementRef.current is null', () => {
-    const instanceRef = useMidday({ current: null } as any);
+    const instanceRef = useMidnight({ current: null } as any);
     effectSetup!();
     expect(instanceRef.current).toBeNull();
   });
 
   it('cleanup destroys instance', () => {
     const header = setupHeader();
-    const instanceRef = useMidday({ current: header } as any);
+    const instanceRef = useMidnight({ current: header } as any);
 
     const cleanup = effectSetup!() as () => void;
     expect(instanceRef.current).not.toBeNull();

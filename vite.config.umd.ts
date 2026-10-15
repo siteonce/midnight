@@ -7,9 +7,9 @@ export default defineConfig({
     emptyOutDir: false,
     lib: {
       entry: resolve(__dirname, 'src/index.ts'),
-      name: 'midday',
+      name: 'midnight',
       formats: ['umd'],
-      fileName: () => 'midday.umd.js',
+      fileName: () => 'midnight.umd.js',
     },
   },
 });

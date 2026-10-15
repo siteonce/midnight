@@ -2,7 +2,7 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
   root: 'demo',
-  base: '/midday.js/',
+  base: '/midnight/',
   build: {
     outDir: '../demo-dist',
     emptyOutDir: true,

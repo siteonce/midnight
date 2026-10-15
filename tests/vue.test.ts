@@ -13,7 +13,7 @@ vi.mock('vue', () => ({
   shallowRef: vi.fn((initial: unknown) => ({ value: initial })),
 }));
 
-import { useMidday, vMidday } from '../src/vue';
+import { useMidnight, vMidnight } from '../src/vue';
 import { mockRect, setScrollY } from './helpers';
 
 function setupHeader(): HTMLElement {
@@ -23,14 +23,14 @@ function setupHeader(): HTMLElement {
   document.body.appendChild(header);
 
   const section = document.createElement('section');
-  section.setAttribute('data-midday-section', 'dark');
+  section.setAttribute('data-midnight-section', 'dark');
   mockRect(section, { top: 500, height: 400 });
   document.body.appendChild(section);
 
   return header;
 }
 
-describe('vue adapter — useMidday composable', () => {
+describe('vue adapter - useMidnight composable', () => {
   beforeEach(() => {
     document.body.innerHTML = '';
     setScrollY(0);
@@ -40,7 +40,7 @@ describe('vue adapter — useMidday composable', () => {
 
   it('registers onMounted and onUnmounted hooks', () => {
     const header = setupHeader();
-    useMidday({ value: header } as any);
+    useMidnight({ value: header } as any);
 
     expect(mountedCb).toBeTypeOf('function');
     expect(unmountedCb).toBeTypeOf('function');
@@ -48,25 +48,25 @@ describe('vue adapter — useMidday composable', () => {
 
   it('creates instance in onMounted', () => {
     const header = setupHeader();
-    const instance = useMidday({ value: header } as any);
+    const instance = useMidnight({ value: header } as any);
 
     mountedCb!();
 
     expect(instance.value).not.toBeNull();
     expect(
-      header.querySelectorAll('[data-midday-variant]').length,
+      header.querySelectorAll('[data-midnight-variant]').length,
     ).toBeGreaterThan(0);
   });
 
   it('skips init when elementRef is null', () => {
-    const instance = useMidday({ value: null } as any);
+    const instance = useMidnight({ value: null } as any);
     mountedCb!();
     expect(instance.value).toBeNull();
   });
 
   it('destroys instance in onUnmounted', () => {
     const header = setupHeader();
-    const instance = useMidday({ value: header } as any);
+    const instance = useMidnight({ value: header } as any);
 
     mountedCb!();
     expect(instance.value).not.toBeNull();
@@ -76,7 +76,7 @@ describe('vue adapter — useMidday composable', () => {
   });
 });
 
-describe('vue adapter — vMidday directive', () => {
+describe('vue adapter - vMidnight directive', () => {
   beforeEach(() => {
     document.body.innerHTML = '';
     setScrollY(0);
@@ -84,39 +84,39 @@ describe('vue adapter — vMidday directive', () => {
 
   it('creates instance in mounted hook', () => {
     const header = setupHeader();
-    vMidday.mounted!(header, { value: undefined } as any, null as any, null as any);
+    vMidnight.mounted!(header, { value: undefined } as any, null as any, null as any);
 
     expect(
-      header.querySelectorAll('[data-midday-variant]').length,
+      header.querySelectorAll('[data-midnight-variant]').length,
     ).toBeGreaterThan(0);
   });
 
   it('updated hook calls refresh and picks up new sections', () => {
     const header = setupHeader();
-    vMidday.mounted!(header, { value: undefined } as any, null as any, null as any);
+    vMidnight.mounted!(header, { value: undefined } as any, null as any, null as any);
 
-    expect(header.querySelectorAll('[data-midday-variant]')).toHaveLength(2);
+    expect(header.querySelectorAll('[data-midnight-variant]')).toHaveLength(2);
 
     // Add a new section to the DOM
     const section = document.createElement('section');
-    section.setAttribute('data-midday-section', 'light');
+    section.setAttribute('data-midnight-section', 'light');
     mockRect(section, { top: 200, height: 400 });
     document.body.appendChild(section);
 
     // Simulate Vue's updated hook
-    vMidday.updated!(header, {} as any, null as any, null as any);
+    vMidnight.updated!(header, {} as any, null as any, null as any);
 
-    expect(header.querySelectorAll('[data-midday-variant]')).toHaveLength(3);
+    expect(header.querySelectorAll('[data-midnight-variant]')).toHaveLength(3);
     expect(
-      header.querySelector('[data-midday-variant="light"]'),
+      header.querySelector('[data-midnight-variant="light"]'),
     ).not.toBeNull();
   });
 
   it('destroys instance in unmounted hook', () => {
     const header = setupHeader();
-    vMidday.mounted!(header, { value: undefined } as any, null as any, null as any);
-    vMidday.unmounted!(header, {} as any, null as any, null as any);
+    vMidnight.mounted!(header, { value: undefined } as any, null as any, null as any);
+    vMidnight.unmounted!(header, {} as any, null as any, null as any);
 
-    expect(header.querySelectorAll('[data-midday-variant]')).toHaveLength(0);
+    expect(header.querySelectorAll('[data-midnight-variant]')).toHaveLength(0);
   });
 });

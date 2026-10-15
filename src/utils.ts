@@ -35,14 +35,14 @@ export function cacheSectionBounds(sections: SectionData[]): void {
   }
 }
 
-const SECTION_SELECTOR = '[data-midday-section]';
-const SECTION_ATTR = 'data-midday-section';
-const TARGET_ATTR = 'data-midday-target';
+const SECTION_SELECTOR = '[data-midnight-section]';
+const SECTION_ATTR = 'data-midnight-section';
+const TARGET_ATTR = 'data-midnight-target';
 
 /**
  * Scan the document for sections, optionally filtered by instance name.
- * - Sections without data-midday-target apply to ALL instances.
- * - Sections with data-midday-target apply only to the listed instance(s) (space-separated).
+ * - Sections without data-midnight-target apply to ALL instances.
+ * - Sections with data-midnight-target apply only to the listed instance(s) (space-separated).
  */
 export function scanSections(instanceName?: string): SectionData[] {
   const els = document.querySelectorAll(SECTION_SELECTOR);
@@ -54,7 +54,7 @@ export function scanSections(instanceName?: string): SectionData[] {
 
     const target = el.getAttribute(TARGET_ATTR);
     if (target) {
-      // Section is targeted — only include if this instance is listed
+      // Section is targeted - only include if this instance is listed
       if (!instanceName || !target.split(' ').includes(instanceName)) continue;
     }
 

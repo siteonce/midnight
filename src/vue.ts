@@ -1,21 +1,21 @@
 import { onMounted, onUnmounted, shallowRef, type Ref, type ObjectDirective } from 'vue';
-import { createMidday } from './core';
-import type { MiddayOptions, MiddayInstance } from './types';
+import { createMidnight } from './core';
+import type { MidnightOptions, MidnightInstance } from './types';
 
 /**
- * Vue composable for midday.js (auto mode).
+ * Vue composable for midnight.js (auto mode).
  * Initializes on mount, destroys on unmount.
- * Cloning happens client-side — safe for SSR.
+ * Cloning happens client-side - safe for SSR.
  */
-export function useMidday(
+export function useMidnight(
   elementRef: Ref<HTMLElement | null>,
-  options?: MiddayOptions,
-): Ref<MiddayInstance | null> {
-  const instance = shallowRef<MiddayInstance | null>(null);
+  options?: MidnightOptions,
+): Ref<MidnightInstance | null> {
+  const instance = shallowRef<MidnightInstance | null>(null);
 
   onMounted(() => {
     if (!elementRef.value) return;
-    instance.value = createMidday(elementRef.value, options);
+    instance.value = createMidnight(elementRef.value, options);
   });
 
   onUnmounted(() => {
@@ -27,20 +27,20 @@ export function useMidday(
 }
 
 /**
- * Vue custom directive for midday.js (auto mode).
- * Usage: <header v-midday> or <header v-midday="{ onChange }">
- * In <script setup>, import as `vMidday` for auto-registration.
+ * Vue custom directive for midnight.js (auto mode).
+ * Usage: <header v-midnight> or <header v-midnight="{ onChange }">
+ * In <script setup>, import as `vMidnight` for auto-registration.
  */
-export const vMidday: ObjectDirective<HTMLElement, MiddayOptions | undefined> = {
+export const vMidnight: ObjectDirective<HTMLElement, MidnightOptions | undefined> = {
   mounted(el, binding) {
-    const instance = createMidday(el, binding.value);
-    (el as any).__middayInstance = instance;
+    const instance = createMidnight(el, binding.value);
+    (el as any).__midnightInstance = instance;
   },
   updated(el) {
-    (el as any).__middayInstance?.refresh();
+    (el as any).__midnightInstance?.refresh();
   },
   unmounted(el) {
-    (el as any).__middayInstance?.destroy();
-    delete (el as any).__middayInstance;
+    (el as any).__midnightInstance?.destroy();
+    delete (el as any).__midnightInstance;
   },
 };

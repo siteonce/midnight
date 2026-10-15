@@ -14,10 +14,10 @@ describe('scanSections', () => {
     setScrollY(0);
   });
 
-  it('returns all [data-midday-section] elements', () => {
+  it('returns all [data-midnight-section] elements', () => {
     document.body.innerHTML = `
-      <div data-midday-section="dark"></div>
-      <div data-midday-section="light"></div>
+      <div data-midnight-section="dark"></div>
+      <div data-midnight-section="light"></div>
     `;
     const sections = scanSections();
     expect(sections).toHaveLength(2);
@@ -27,8 +27,8 @@ describe('scanSections', () => {
 
   it('skips elements without a variant value', () => {
     document.body.innerHTML = `
-      <div data-midday-section=""></div>
-      <div data-midday-section="dark"></div>
+      <div data-midnight-section=""></div>
+      <div data-midnight-section="dark"></div>
     `;
     const sections = scanSections();
     expect(sections).toHaveLength(1);
@@ -37,7 +37,7 @@ describe('scanSections', () => {
 
   it('with instanceName includes untargeted sections', () => {
     document.body.innerHTML = `
-      <div data-midday-section="dark"></div>
+      <div data-midnight-section="dark"></div>
     `;
     const sections = scanSections('top');
     expect(sections).toHaveLength(1);
@@ -45,7 +45,7 @@ describe('scanSections', () => {
 
   it('with instanceName includes sections with matching target', () => {
     document.body.innerHTML = `
-      <div data-midday-section="dark" data-midday-target="top"></div>
+      <div data-midnight-section="dark" data-midnight-target="top"></div>
     `;
     const sections = scanSections('top');
     expect(sections).toHaveLength(1);
@@ -53,7 +53,7 @@ describe('scanSections', () => {
 
   it('with instanceName excludes sections with non-matching target', () => {
     document.body.innerHTML = `
-      <div data-midday-section="dark" data-midday-target="bottom"></div>
+      <div data-midnight-section="dark" data-midnight-target="bottom"></div>
     `;
     const sections = scanSections('top');
     expect(sections).toHaveLength(0);
@@ -61,7 +61,7 @@ describe('scanSections', () => {
 
   it('with instanceName handles space-separated targets', () => {
     document.body.innerHTML = `
-      <div data-midday-section="dark" data-midday-target="top bottom"></div>
+      <div data-midnight-section="dark" data-midnight-target="top bottom"></div>
     `;
     expect(scanSections('top')).toHaveLength(1);
     expect(scanSections('bottom')).toHaveLength(1);
@@ -70,8 +70,8 @@ describe('scanSections', () => {
 
   it('without instanceName excludes targeted sections', () => {
     document.body.innerHTML = `
-      <div data-midday-section="dark" data-midday-target="top"></div>
-      <div data-midday-section="light"></div>
+      <div data-midnight-section="dark" data-midnight-target="top"></div>
+      <div data-midnight-section="light"></div>
     `;
     const sections = scanSections();
     expect(sections).toHaveLength(1);

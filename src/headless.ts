@@ -1,15 +1,15 @@
 import type {
-  MiddayHeadlessOptions,
-  MiddayInstance,
+  MidnightHeadlessOptions,
+  MidnightInstance,
   VariantState,
   Engine,
 } from './types';
 import { scanSections } from './utils';
 import { createEngine } from './engine';
 
-export function createMiddayHeadless(
-  options: MiddayHeadlessOptions,
-): MiddayInstance {
+export function createMidnightHeadless(
+  options: MidnightHeadlessOptions,
+): MidnightInstance {
   const {
     element,
     variants: variantMap,

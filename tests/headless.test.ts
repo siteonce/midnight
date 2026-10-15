@@ -1,8 +1,8 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { createMiddayHeadless } from '../src/headless';
+import { createMidnightHeadless } from '../src/headless';
 import { mockRect, setScrollY } from './helpers';
 
-describe('createMiddayHeadless', () => {
+describe('createMidnightHeadless', () => {
   beforeEach(() => {
     document.body.innerHTML = '';
     setScrollY(0);
@@ -16,7 +16,7 @@ describe('createMiddayHeadless', () => {
 
     const originalHTML = header.innerHTML;
 
-    createMiddayHeadless({
+    createMidnightHeadless({
       element: header,
       variants: {
         default: document.createElement('div'),
@@ -33,7 +33,7 @@ describe('createMiddayHeadless', () => {
     document.body.appendChild(header);
 
     const section = document.createElement('section');
-    section.setAttribute('data-midday-section', 'dark');
+    section.setAttribute('data-midnight-section', 'dark');
     mockRect(section, { top: 0, height: 400 });
     document.body.appendChild(section);
 
@@ -42,7 +42,7 @@ describe('createMiddayHeadless', () => {
     mockRect(defaultEl, { top: 0, height: 60, bottom: 60 });
     mockRect(darkEl, { top: 0, height: 60, bottom: 60 });
 
-    createMiddayHeadless({
+    createMidnightHeadless({
       element: header,
       variants: { default: defaultEl, dark: darkEl },
     });
@@ -59,7 +59,7 @@ describe('createMiddayHeadless', () => {
     const baseEl = document.createElement('div');
     const darkEl = document.createElement('div');
 
-    createMiddayHeadless({
+    createMidnightHeadless({
       element: header,
       variants: { base: baseEl, dark: darkEl },
       defaultVariant: 'base',
@@ -76,7 +76,7 @@ describe('createMiddayHeadless', () => {
 
     const removeSpy = vi.spyOn(window, 'removeEventListener');
 
-    const instance = createMiddayHeadless({
+    const instance = createMidnightHeadless({
       element: header,
       variants: { default: document.createElement('div') },
     });
@@ -99,7 +99,7 @@ describe('createMiddayHeadless', () => {
     mockRect(defaultEl, { top: 0, height: 60, bottom: 60 });
     mockRect(darkEl, { top: 0, height: 60, bottom: 60 });
 
-    const instance = createMiddayHeadless({
+    const instance = createMidnightHeadless({
       element: header,
       variants: { default: defaultEl, dark: darkEl },
     });
@@ -107,7 +107,7 @@ describe('createMiddayHeadless', () => {
     expect(defaultEl.style.clipPath).toBe('inset(0)');
 
     const section = document.createElement('section');
-    section.setAttribute('data-midday-section', 'dark');
+    section.setAttribute('data-midnight-section', 'dark');
     mockRect(section, { top: 0, height: 400 });
     document.body.appendChild(section);
 
@@ -123,29 +123,29 @@ describe('createMiddayHeadless', () => {
     document.body.appendChild(header);
 
     const section = document.createElement('section');
-    section.setAttribute('data-midday-section', 'dark');
-    section.setAttribute('data-midday-target', 'top');
+    section.setAttribute('data-midnight-section', 'dark');
+    section.setAttribute('data-midnight-target', 'top');
     mockRect(section, { top: 0, height: 400 });
     document.body.appendChild(section);
 
-    // Without name — targeted section is excluded
+    // Without name - targeted section is excluded
     const defaultEl = document.createElement('div');
     const darkEl = document.createElement('div');
     mockRect(defaultEl, { top: 0, height: 60, bottom: 60 });
     mockRect(darkEl, { top: 0, height: 60, bottom: 60 });
-    createMiddayHeadless({
+    createMidnightHeadless({
       element: header,
       variants: { default: defaultEl, dark: darkEl },
     });
     expect(defaultEl.style.clipPath).toBe('inset(0)');
     expect(darkEl.style.clipPath).toBe('inset(0 0 100% 0)');
 
-    // With matching name — targeted section is included
+    // With matching name - targeted section is included
     const defaultEl2 = document.createElement('div');
     const darkEl2 = document.createElement('div');
     mockRect(defaultEl2, { top: 0, height: 60, bottom: 60 });
     mockRect(darkEl2, { top: 0, height: 60, bottom: 60 });
-    createMiddayHeadless({
+    createMidnightHeadless({
       element: header,
       variants: { default: defaultEl2, dark: darkEl2 },
       name: 'top',
