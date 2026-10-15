@@ -1,7 +1,7 @@
 {
-  "name": "@marcwiest/midday.js",
-  "version": "0.2.2",
-  "description": "A modern vanilla JS plugin for fixed headers that change style as you scroll through sections. Zero dependencies. The spiritual successor to midnight.js.",
+  "name": "@siteonce/midnight",
+  "version": "0.3.0",
+  "description": "A modern vanilla JS plugin for fixed headers that change style as you scroll through sections. Zero dependencies. Inspired by Aerolab's midnight.js.",
   "publishConfig": {
     "access": "public"
   },
@@ -14,14 +14,14 @@
     "url": "https://github.com/marcwiest/midday.js/issues"
   },
   "type": "module",
-  "main": "./dist/midday.umd.js",
-  "module": "./dist/midday.mjs",
+  "main": "./dist/midnight.umd.js",
+  "module": "./dist/midnight.mjs",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/midday.mjs",
-      "require": "./dist/midday.umd.js"
+      "import": "./dist/midnight.mjs",
+      "require": "./dist/midnight.umd.js"
     },
     "./react": {
       "types": "./dist/react.d.ts",

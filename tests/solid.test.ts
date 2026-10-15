@@ -12,7 +12,7 @@ vi.mock('solid-js', () => ({
   }),
 }));
 
-import { createMidday, midday } from '../src/solid';
+import { createMidnight, midnight } from '../src/solid';
 import { mockRect, setScrollY } from './helpers';
 
 function setupHeader(): HTMLElement {
@@ -22,14 +22,14 @@ function setupHeader(): HTMLElement {
   document.body.appendChild(header);
 
   const section = document.createElement('section');
-  section.setAttribute('data-midday-section', 'dark');
+  section.setAttribute('data-midnight-section', 'dark');
   mockRect(section, { top: 500, height: 400 });
   document.body.appendChild(section);
 
   return header;
 }
 
-describe('solid adapter — createMidday', () => {
+describe('solid adapter - createMidnight', () => {
   beforeEach(() => {
     document.body.innerHTML = '';
     setScrollY(0);
@@ -39,7 +39,7 @@ describe('solid adapter — createMidday', () => {
 
   it('registers onMount and onCleanup hooks', () => {
     const header = setupHeader();
-    createMidday(() => header);
+    createMidnight(() => header);
 
     expect(mountCb).toBeTypeOf('function');
     expect(cleanupCbs.length).toBeGreaterThan(0);
@@ -47,7 +47,7 @@ describe('solid adapter — createMidday', () => {
 
   it('creates instance in onMount', () => {
     const header = setupHeader();
-    const getInstance = createMidday(() => header);
+    const getInstance = createMidnight(() => header);
 
     expect(getInstance()).toBeNull();
 
@@ -55,30 +55,30 @@ describe('solid adapter — createMidday', () => {
 
     expect(getInstance()).not.toBeNull();
     expect(
-      header.querySelectorAll('[data-midday-variant]').length,
+      header.querySelectorAll('[data-midnight-variant]').length,
     ).toBeGreaterThan(0);
   });
 
   it('skips init when accessor returns null', () => {
-    const getInstance = createMidday(() => null);
+    const getInstance = createMidnight(() => null);
     mountCb!();
     expect(getInstance()).toBeNull();
   });
 
   it('destroys instance in onCleanup', () => {
     const header = setupHeader();
-    const getInstance = createMidday(() => header);
+    const getInstance = createMidnight(() => header);
 
     mountCb!();
     expect(getInstance()).not.toBeNull();
 
-    // The first onCleanup registered by createMidday
+    // The first onCleanup registered by createMidnight
     cleanupCbs[0]();
     expect(getInstance()).toBeNull();
   });
 });
 
-describe('solid adapter — midday directive', () => {
+describe('solid adapter - midnight directive', () => {
   beforeEach(() => {
     document.body.innerHTML = '';
     setScrollY(0);
@@ -88,20 +88,20 @@ describe('solid adapter — midday directive', () => {
 
   it('creates instance immediately (not deferred to onMount)', () => {
     const header = setupHeader();
-    midday(header, () => undefined);
+    midnight(header, () => undefined);
 
     expect(
-      header.querySelectorAll('[data-midday-variant]').length,
+      header.querySelectorAll('[data-midnight-variant]').length,
     ).toBeGreaterThan(0);
   });
 
   it('registers onCleanup for teardown', () => {
     const header = setupHeader();
-    midday(header, () => undefined);
+    midnight(header, () => undefined);
 
     expect(cleanupCbs.length).toBeGreaterThan(0);
 
     cleanupCbs[0]();
-    expect(header.querySelectorAll('[data-midday-variant]')).toHaveLength(0);
+    expect(header.querySelectorAll('[data-midnight-variant]')).toHaveLength(0);
   });
 });

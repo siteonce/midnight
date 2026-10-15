@@ -1,5 +1,5 @@
 /**
- * Global test setup — mocks for APIs missing or unsuitable in happy-dom.
+ * Global test setup - mocks for APIs missing or unsuitable in happy-dom.
  *
  * Mock strategy:
  *   - Tests override `el.getBoundingClientRect()` per element and set
@@ -7,11 +7,11 @@
  *   - happy-dom normalizes style values (e.g. `style.top = '0'` reads back
  *     as `'0px'`), so assertions should use the normalized form.
  *   - Framework adapter tests use `vi.mock()` to replace lifecycle hooks
- *     (useEffect, onMounted, onMount, etc.) with captured callbacks —
+ *     (useEffect, onMounted, onMount, etc.) with captured callbacks -
  *     no framework runtime or test utilities needed.
  */
 
-// ResizeObserver doesn't exist in happy-dom — stub globally.
+// ResizeObserver doesn't exist in happy-dom - stub globally.
 // The engine uses it to watch section resize; tests mock getBoundingClientRect
 // directly, so the observer callbacks never need to fire.
 globalThis.ResizeObserver = class {

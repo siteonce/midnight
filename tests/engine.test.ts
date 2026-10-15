@@ -42,7 +42,7 @@ function createConfig(overrides: Partial<EngineConfig> = {}): EngineConfig {
   };
 }
 
-describe('createEngine — clip-path computation', () => {
+describe('createEngine - clip-path computation', () => {
   beforeEach(() => {
     document.body.innerHTML = '';
     setScrollY(0);
@@ -126,7 +126,7 @@ describe('createEngine — clip-path computation', () => {
   });
 
   it('scrolling into a section updates clip-paths', () => {
-    // Section at document y=500 — initially no overlap with header (0-60)
+    // Section at document y=500 - initially no overlap with header (0-60)
     const config = createConfig({
       sections: [makeSection('dark', { top: 500, height: 400 })],
     });
@@ -188,7 +188,7 @@ describe('createEngine — clip-path computation', () => {
   });
 });
 
-describe('createEngine — variant taller than header', () => {
+describe('createEngine - variant taller than header', () => {
   beforeEach(() => {
     document.body.innerHTML = '';
     setScrollY(0);
@@ -251,13 +251,13 @@ describe('createEngine — variant taller than header', () => {
 
     // Section top at 0 = header top, doesn't extend above.
     // adjTop = 0 - (-20) = 20 → full extra height clipped
-    // Shows 60px (same as header height) — no overlap into section above
+    // Shows 60px (same as header height) - no overlap into section above
     expect(tall.wrapper.style.clipPath).toBe('inset(20px 0 0px 0)');
     engine.destroy();
   });
 });
 
-describe('createEngine — onChange', () => {
+describe('createEngine - onChange', () => {
   beforeEach(() => {
     document.body.innerHTML = '';
     setScrollY(0);
@@ -295,7 +295,7 @@ describe('createEngine — onChange', () => {
   });
 });
 
-describe('createEngine — ResizeObserver', () => {
+describe('createEngine - ResizeObserver', () => {
   beforeEach(() => {
     document.body.innerHTML = '';
     setScrollY(0);
@@ -317,7 +317,7 @@ describe('createEngine — ResizeObserver', () => {
   });
 });
 
-describe('createEngine — destroy', () => {
+describe('createEngine - destroy', () => {
   beforeEach(() => {
     document.body.innerHTML = '';
     setScrollY(0);
