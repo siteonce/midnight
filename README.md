@@ -33,9 +33,9 @@ npm install @siteonce/midnight
 Or via CDN (UMD, exposes a global `midnight`):
 
 ```html
-<script src="https://unpkg.com/@siteonce/midnight/dist/midnight.umd.js"></script>
+<script src="https://unpkg.com/@siteonce/midnight@0.3/dist/midnight.umd.js"></script>
 <!-- or -->
-<script src="https://cdn.jsdelivr.net/npm/@siteonce/midnight/dist/midnight.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@siteonce/midnight@0.3/dist/midnight.umd.js"></script>
 ```
 
 ## Usage
