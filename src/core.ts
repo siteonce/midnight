@@ -10,6 +10,15 @@ import { createEngine } from './engine';
 const VARIANT_ATTR = 'data-midnight-variant';
 const DEFAULT_NAME = 'default';
 
+/** The element at the same place in `to` as `el` is in `from`. */
+function matchingElement(el: Element, from: Element, to: Element): Element | undefined {
+  const path: number[] = [];
+  for (let node = el; node !== from; node = node.parentElement!) {
+    path.unshift(Array.prototype.indexOf.call(node.parentElement!.children, node));
+  }
+  return path.reduce<Element | undefined>((node, i) => node?.children[i], to);
+}
+
 export function createMidnight(
   element: HTMLElement,
   options: MidnightOptions = {},
@@ -84,8 +93,6 @@ export function createMidnight(
 
     if (isClone) {
       wrapper.setAttribute('aria-hidden', 'true');
-      wrapper.setAttribute('inert', '');
-      wrapper.style.pointerEvents = 'none';
       wrapper.appendChild(template.cloneNode(true));
     } else {
       wrapper.appendChild(template);
@@ -94,9 +101,31 @@ export function createMidnight(
     return { wrapper, name };
   }
 
+  // Listening on the window, in the capture phase, stops a clone's click before
+  // any site listener sees it, so site code only ever sees the passed click.
+  function onClick(event: MouseEvent): void {
+    const { target } = event;
+    if (!(target instanceof Element)) return;
+    const [original, ...clones] = variants;
+    const clone = clones.find((c) => c.wrapper.contains(target));
+    if (!clone) return;
+
+    event.stopImmediatePropagation();
+
+    const modified = event.metaKey || event.ctrlKey || event.shiftKey || event.altKey;
+    if (modified && target.closest('a[href]')) return;
+
+    const match = matchingElement(target, clone.wrapper, original.wrapper);
+    if (!match) return;
+
+    event.preventDefault();
+    match.dispatchEvent(new MouseEvent('click', event));
+  }
+
   function init(): void {
     const sections = scanSections(instanceName);
     variants = buildVariants();
+    window.addEventListener('click', onClick, true);
     engine = createEngine({
       element,
       variants,
@@ -137,6 +166,7 @@ export function createMidnight(
   }
 
   function destroy(): void {
+    window.removeEventListener('click', onClick, true);
     engine?.destroy();
     engine = null;
     extractLiveContent();
