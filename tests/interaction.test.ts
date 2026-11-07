@@ -126,6 +126,8 @@ describe('clones and the mouse', () => {
     ['ctrl', { ctrlKey: true }],
     ['shift', { shiftKey: true }],
     ['alt', { altKey: true }],
+    // Safari fires click, not auxclick, for the middle button.
+    ['middle', { button: 1 }],
   ])('a %s click on a clone link stays native and runs no site click code', (_name, init) => {
     const header = setup();
     let siteClicks = 0;
