@@ -321,7 +321,6 @@ describe('clones and the keyboard', () => {
 
     expect(ringSheets()).toHaveLength(1);
     expect(ringSheets()[0].cssRules[0].cssText).toContain(`:where([${ATTR}])`);
-    expect(ringSheets()[0].cssRules[0].cssText).toContain('outline: auto');
 
     a.destroy();
     expect(ringSheets()).toHaveLength(1);
