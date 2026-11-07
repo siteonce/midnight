@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { createMidnight } from '../src/core';
 import { mockRect, setScrollY } from './helpers';
 
@@ -194,5 +194,126 @@ describe('clones and the mouse', () => {
     click(clone);
 
     expect(clicks).toBe(0);
+  });
+});
+
+describe('clones and the keyboard', () => {
+  const ATTR = 'data-midnight-focus-visible';
+
+  beforeEach(() => {
+    document.body.innerHTML = '';
+    document.adoptedStyleSheets = [];
+  });
+
+  function ringSheets() {
+    return document.adoptedStyleSheets.filter((sheet) =>
+      Array.from(sheet.cssRules).some((rule) => rule.cssText.includes(ATTR)),
+    );
+  }
+
+  it('every focusable element in a clone leaves the tab order, in the original none', () => {
+    const header = setup();
+    const extra = document.createElement('div');
+    extra.setAttribute('tabindex', '0');
+    header.appendChild(extra);
+    createMidnight(header);
+
+    const clone = header.querySelector('[data-midnight-variant="dark"]') as HTMLElement;
+    expect(clone.querySelector('a')!.getAttribute('tabindex')).toBe('-1');
+    expect(clone.querySelector('button')!.getAttribute('tabindex')).toBe('-1');
+    expect(clone.querySelector('input')!.getAttribute('tabindex')).toBe('-1');
+    expect(clone.querySelector('div')!.getAttribute('tabindex')).toBe('-1');
+
+    const original = header.querySelector('[data-midnight-variant="default"]') as HTMLElement;
+    expect(original.querySelector('a')!.hasAttribute('tabindex')).toBe(false);
+    expect(original.querySelector('button')!.hasAttribute('tabindex')).toBe(false);
+    expect(original.querySelector('div')!.getAttribute('tabindex')).toBe('0');
+  });
+
+  it('a clone rebuilt by refresh() also leaves the tab order', () => {
+    const header = setup();
+    createMidnight(header).refresh();
+
+    expect(inVariant(header, 'dark', 'a').getAttribute('tabindex')).toBe('-1');
+  });
+
+  it('focus landing on a clone moves to the matching original element', () => {
+    const header = setup();
+    createMidnight(header);
+
+    inVariant(header, 'dark', 'button').focus();
+
+    expect(document.activeElement).toBe(inVariant(header, 'default', 'button'));
+  });
+
+  it('keyboard focus on the original marks the matching element in the clone only', () => {
+    const header = setup();
+    createMidnight(header);
+
+    inVariant(header, 'default', 'a').focus();
+
+    expect(inVariant(header, 'dark', 'a').hasAttribute(ATTR)).toBe(true);
+    expect(inVariant(header, 'dark', 'button').hasAttribute(ATTR)).toBe(false);
+    expect(inVariant(header, 'default', 'a').hasAttribute(ATTR)).toBe(false);
+  });
+
+  it('focus leaving clears the mark, and the next focus sets its own', () => {
+    const header = setup();
+    createMidnight(header);
+
+    inVariant(header, 'default', 'a').focus();
+    inVariant(header, 'default', 'button').focus();
+
+    expect(inVariant(header, 'dark', 'a').hasAttribute(ATTR)).toBe(false);
+    expect(inVariant(header, 'dark', 'button').hasAttribute(ATTR)).toBe(true);
+
+    inVariant(header, 'default', 'button').blur();
+
+    expect(inVariant(header, 'dark', 'button').hasAttribute(ATTR)).toBe(false);
+  });
+
+  it('focus without :focus-visible, as from a mouse click, marks nothing', () => {
+    const header = setup();
+    createMidnight(header);
+
+    // Which focus counts as visible is the browser's call, so it's stubbed here.
+    const original = inVariant(header, 'default', 'a');
+    const matches = vi.spyOn(original, 'matches').mockReturnValue(false);
+    original.focus();
+    matches.mockRestore();
+
+    expect(inVariant(header, 'dark', 'a').hasAttribute(ATTR)).toBe(false);
+  });
+
+  it('after destroy() focus handling is gone', () => {
+    const header = setup();
+    const instance = createMidnight(header);
+    const clone = inVariant(header, 'dark', 'button');
+    instance.destroy();
+
+    header.appendChild(clone);
+    clone.focus();
+
+    expect(document.activeElement).toBe(clone);
+  });
+
+  it('the default ring rule has zero specificity and exists once across instances', () => {
+    const first = setup();
+    const a = createMidnight(first);
+    const second = document.createElement('nav');
+    second.innerHTML = '<a href="#x">X</a>';
+    mockRect(second, { top: 0, height: 60, width: 1000, right: 1000, bottom: 60 });
+    document.body.appendChild(second);
+    const b = createMidnight(second);
+
+    expect(ringSheets()).toHaveLength(1);
+    expect(ringSheets()[0].cssRules[0].cssText).toContain(`:where([${ATTR}])`);
+    expect(ringSheets()[0].cssRules[0].cssText).toContain('outline: auto');
+
+    a.destroy();
+    expect(ringSheets()).toHaveLength(1);
+
+    b.destroy();
+    expect(ringSheets()).toHaveLength(0);
   });
 });
