@@ -13,3 +13,11 @@ How links and buttons in a managed element respond to people.
 - Each link and button is one tab stop, on the original. Clones take no tab stop and stay hidden from assistive tech.
 - Focus landing on a clone moves to the original.
 - While the original shows keyboard focus, the matching element in each clone carries `data-midnight-focus-visible` and draws a default ring, which any site CSS naming that attribute overrides. A mouse click shows no ring.
+
+## Auto mode: text fields
+
+- A text field isn't usable over a named section, since typing goes to the original and its clone doesn't show it.
+
+## Headless mode
+
+- The site owns its variants and their interaction. The library only clips them.
