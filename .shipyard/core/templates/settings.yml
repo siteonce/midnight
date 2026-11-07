@@ -1,0 +1,69 @@
+# Shipyard settings for this repo. Repo-owned: edit freely.
+# Skills and CI pieces read this file. CI pieces read it from the default branch.
+
+# Which tool fills each role, and how it is started: a shell command or a plain
+# description. Leave a role empty if no module this repo takes uses it.
+roles:
+  planning-agent:
+    tool: ""
+    start: ""
+  orchestrator-bot:
+    tool: ""
+    start: ""
+  builder-bot:
+    tool: ""
+    start: ""
+  reviewer-bot:
+    tool: ""
+    start: ""
+
+# Folders, relative to the repo root.
+paths:
+  specs: docs/product/
+  agent-rules: docs/agents/
+  plans: docs/plans/
+  glossary: docs/context.md
+  north-star: ""          # optional, such as docs/north-star.md
+  sizing-log: ""          # read by the building module; empty: no Sizing log
+  verification-skill: ""  # the repo's verification skill, such as docs/agents/skills/verify/; empty: none
+  docs:                   # what counts as docs for a docs-only PR
+    - "docs/**"
+    - "**/*.md"
+
+# Settings no part this repo takes reads, such as drift-check or labels without
+# those modules, do nothing: keep their defaults or delete them.
+
+branches:
+  default: main
+  plan: plan/<slug>       # one branch per plan, holding the plan and its work
+  hotfix: hotfix/<slug>
+  drift-check: drift/<date>   # read by the weekly drift check
+
+# The repo's own commands. Leave one empty until it exists.
+commands:
+  install: ""
+  check: ""               # types, lint, build
+  test: ""
+
+# Where tests touch the code, one short phrase each, such as "package exports",
+# "HTTP routes" or "the CLI: arguments in, stdout, stderr and exit code out".
+seams: []
+
+# The surfaces verification drives, such as web page, API, library or CLI.
+verification-surfaces: []
+
+# Read by the coverage floor CI piece: the least line coverage, in percent.
+# Empty: coverage is printed, never enforced.
+coverage-floor: ""
+
+# Read by the weekly drift check: who examines its findings.
+drift-check:
+  human: ""
+
+# Read by the dispatch module.
+labels:
+  prefix: "shipyard:"
+  trigger-label-adders: []   # empty: anyone with write access
+notify: mention              # how the plan's human is told about a human step:
+                             # mention (the Human step comment's mention), or a plain
+                             # description of another channel the bots can reach

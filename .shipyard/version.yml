@@ -1,0 +1,23 @@
+release: ""   # none yet
+commit: b524c1ee6139c25596919aefbd4e57ec9eb45576
+files:
+  core/NOTICE.md: a578bb6a45e71d6b6f4807441ea22ffd711d59447259d6cf6f6baebe86a4690a
+  core/glossary.md: aa4e9a6682d935458d5d3414258ab7b7441bd32bd663894bb18b78edbe055878
+  core/house-rules.md: e95ac6aa3ea895937350c6148a70df77936c2f9d4fe2e360949a259f503427f2
+  core/human-steps.md: 4f43b700c983d0824608e1c8dedfd4d60020a2803142771f5151bdc538a74b15
+  core/index.md: 9e0b2667c1472f2c0cff9ecadb42eade4c86ac03af79163fb1ced8319d22b32e
+  core/plans.md: 77f1d60b4b81113a3ad11ca7e69a06c7e0e5e34f24b55b12247f3af7d2f0e3ab
+  core/pr-shapes/docs-only.md: 8819c1df6bcfdb271963cf4669b392e242bd1bdc253e92376550ff10b75388d5
+  core/pr-shapes/hotfix.md: 76c8501d148927b3ed9428fd602eecd2ed0598a857730281a2b2e0b226694889
+  core/pr-shapes/index.md: ea316b91170f5b0acd0f605ee8f536f92e271d52241d1180a1bf9c02f5501dc7
+  core/practices/git.md: 0ed75acb50c1d36f8a4a92c552c53a17d31e052473c32991b0003e6febdeaad9
+  core/practices/testing.md: 218b4b292246efb1351baa53e71a429c2e1b8aefbbbe141f94683ddb37e80987
+  core/practices/verification.md: de8ee438aba109662c3bfaad8cf5a383566d0662d38cbc58a0153c274905cbff
+  core/roles.md: 6d5e82f8912bb965f66e5f72404bba690381395267cb7e0e7d9b8a8275909512
+  core/spec-writing.md: 640629601a822331b23faeee796a3d7bd6530fb0149d9159bb2f3ef6b6dab75d
+  core/templates/agent-rules-index.md: 558ee0a854ef2be4b8c803955b5acb16ec9b70a0cc53af100ea4112be2c433d9
+  core/templates/agents-block.md: 142bf8c99e6dcf29d82309447ca2ca747ded33a14a1c3e56311b5c495600a89c
+  core/templates/context.md: 99f399d4d56495c78aaaff1d863241812e56b2d960ded26f75d9285ef3db7c37
+  core/templates/plan.md: b9c41fc3507946283d39c42138ad19da1f0078e0f2982c856290c45eb1a68aee
+  core/templates/settings.yml: b73104b8c9a88c9ff2c7626ec794335dde9edd144c3d6fbaa60b6a101ca09e56
+  core/templates/spec-index.md: 99aa8d8a2c60e29bbb53d796d4b92835b8c18661dd049cf2168f7c8c5b90a32c
