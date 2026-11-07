@@ -10,4 +10,6 @@ Promise: the element changes style as page sections scroll beneath it, with a pi
 
 ## Reading order
 
+1. [Interaction](interaction.md)
+
 Terms are defined in the repo's glossary, `docs/context.md`.
