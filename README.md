@@ -9,7 +9,7 @@ Fixed headers (or any fixed/sticky element) that change style as page sections s
 
 A modern, dependency-free rewrite inspired by Aerolab's [midnight.js](https://github.com/Aerolab/midnight.js). Not affiliated with or endorsed by Aerolab.
 
-**~1 kB gzipped** (auto mode) | TypeScript | Adapters for React, Vue, Svelte and Solid
+**~2.4 kB gzipped** (auto mode) | TypeScript | Adapters for React, Vue, Svelte and Solid
 
 **[Live Demo](https://siteonce.github.io/midnight/)**
 
@@ -20,7 +20,7 @@ The original midnight.js (2014) introduced the pattern. This package implements 
 - **`clip-path: inset()`** for GPU-composited clipping
 - **`ResizeObserver`** to track section sizes reactively (no polling)
 - **Scroll-triggered `requestAnimationFrame`** that idles when the user is not scrolling
-- **`aria-hidden` + `inert`** on cloned variants
+- **Links and buttons that work over every section**, with one tab stop each and cloned variants hidden from assistive tech
 - Full **`destroy()` / `refresh()`** lifecycle
 - Zero dependencies, no jQuery
 
@@ -33,9 +33,9 @@ npm install @siteonce/midnight
 Or via CDN (UMD, exposes a global `midnight`):
 
 ```html
-<script src="https://unpkg.com/@siteonce/midnight@0.3/dist/midnight.umd.js"></script>
+<script src="https://unpkg.com/@siteonce/midnight@0.4/dist/midnight.umd.js"></script>
 <!-- or -->
-<script src="https://cdn.jsdelivr.net/npm/@siteonce/midnight@0.3/dist/midnight.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@siteonce/midnight@0.4/dist/midnight.umd.js"></script>
 ```
 
 ## Usage
@@ -107,7 +107,7 @@ const instance = midnightHeadless({
 });
 ```
 
-In headless mode you position the variant elements absolutely inside the managed element and set `aria-hidden`/`inert` on non-default variants yourself. With SSR, render non-default variants client-side only to avoid duplicate content.
+In headless mode your site owns its variants and their interaction, and the plugin only clips them, so nothing under [Accessibility and interaction](#accessibility-and-interaction) applies. You position the variant elements absolutely inside the managed element and set `aria-hidden`/`inert` on non-default variants yourself. With SSR, render non-default variants client-side only to avoid duplicate content.
 
 ## API
 
@@ -192,16 +192,32 @@ function Header() {
 }
 ```
 
-## Accessibility
+## Accessibility and interaction
 
-- Cloned variants get `aria-hidden="true"` and `inert`, so screen readers and keyboard users only encounter the original content once.
+This section covers auto mode.
+
+- Links and buttons take the mouse over every section. At any point, including mid-wipe, the variant painted there takes hover, cursor and clicks.
+- A click on a clone runs your click code on the matching element in the original, once. Listeners on the original, delegated listeners and inline handlers each fire once, and the default action follows unless your code prevents it. The click your code sees has `isTrusted: false`.
+- A modified or middle click on a link stays native on the clone, opening a tab or window as any link does, and runs none of your click code.
+- Only clicks pass to the original. CSS `:hover` works on clones, but a `mouseenter` listener on the original doesn't run when the mouse is over a clone.
+- Each link and button is one tab stop, on the original. Clones take no tab stop and get `aria-hidden="true"`, so screen readers and keyboard users only encounter the content once. Focus landing on a clone moves to the original.
+- While the original shows keyboard focus, the matching element in each clone carries `data-midnight-focus-visible` and draws a default ring. A mouse click shows no ring. `:focus-visible` can't match a clone, so a custom focus style names the attribute too, or clones keep the default ring:
+
+  ```css
+  header a:focus-visible,
+  header a[data-midnight-focus-visible] {
+    outline: 3px solid currentColor;
+    outline-offset: 4px;
+  }
+  ```
+
+- A text field isn't usable over a named section, since typing goes to the original and its clone doesn't show it.
 - Auto mode is SSR-safe: server HTML contains a single element, so crawlers see one set of links.
-- `cloneNode(true)` does not copy listeners added with `addEventListener`. Use event delegation for interactive content.
 - `clip-path` clips all descendants, including dropdown panels. Render panels outside the managed element (or in a portal) and keep only the triggers inside.
 
 ## Browser support
 
-Requires `clip-path: inset()`, `ResizeObserver` and `requestAnimationFrame` (all 97%+ global support). Works in all modern evergreen browsers. No IE support.
+Requires `clip-path: inset()`, `ResizeObserver` and `requestAnimationFrame` (all 97%+ global support). Works in all modern evergreen browsers. No IE support. The default focus ring on clones also needs constructed stylesheets (Safari 16.4 or later); without them, everything else still works.
 
 ## Development
 

@@ -1,6 +1,6 @@
 {
   "name": "@siteonce/midnight",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "A modern vanilla JS plugin for fixed headers that change style as you scroll through sections. Zero dependencies. Inspired by Aerolab's midnight.js.",
   "publishConfig": {
     "access": "public"

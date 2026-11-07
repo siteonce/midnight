@@ -54,20 +54,6 @@ describe('createMidnight', () => {
     expect(defaultWrapper.hasAttribute('inert')).toBe(false);
   });
 
-  it('clone wrappers have aria-hidden="true", inert, pointer-events: none', () => {
-    const header = setupDOM('data-midnight-element', [
-      '<section data-midnight-section="dark"></section>',
-    ]);
-    createMidnight(header);
-
-    const clone = header.querySelector(
-      '[data-midnight-variant="dark"]',
-    ) as HTMLElement;
-    expect(clone.getAttribute('aria-hidden')).toBe('true');
-    expect(clone.hasAttribute('inert')).toBe(true);
-    expect(clone.style.pointerEvents).toBe('none');
-  });
-
   it('all wrappers have position: absolute overlay styles', () => {
     const header = setupDOM('data-midnight-element', [
       '<section data-midnight-section="dark"></section>',
