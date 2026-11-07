@@ -9,6 +9,27 @@ import { createEngine } from './engine';
 
 const VARIANT_ATTR = 'data-midnight-variant';
 const DEFAULT_NAME = 'default';
+const FOCUS_ATTR = 'data-midnight-focus-visible';
+const FOCUSABLE = 'a[href],button,input,select,textarea,summary,[tabindex],[contenteditable]';
+
+// One shared rule for the default ring. Zero specificity lets any site rule naming
+// the attribute win, and a constructed sheet isn't blocked by a strict CSP.
+let ringSheet: CSSStyleSheet | null = null;
+let ringUsers = 0;
+
+function addRingRule(): void {
+  // Without constructed sheets (Safari before 16.4), a clone shows no default ring.
+  if (ringUsers++ > 0 || !document.adoptedStyleSheets) return;
+  ringSheet = new CSSStyleSheet();
+  ringSheet.replaceSync(`:where([${FOCUS_ATTR}]) { outline: auto; }`);
+  document.adoptedStyleSheets = [...document.adoptedStyleSheets, ringSheet];
+}
+
+function removeRingRule(): void {
+  if (--ringUsers > 0 || !ringSheet) return;
+  document.adoptedStyleSheets = document.adoptedStyleSheets.filter((s) => s !== ringSheet);
+  ringSheet = null;
+}
 
 /** The element at the same place in `to` as `el` is in `from`. */
 function matchingElement(el: Element, from: Element, to: Element): Element | undefined {
@@ -94,6 +115,9 @@ export function createMidnight(
     if (isClone) {
       wrapper.setAttribute('aria-hidden', 'true');
       wrapper.appendChild(template.cloneNode(true));
+      for (const el of wrapper.querySelectorAll(FOCUSABLE)) {
+        el.setAttribute('tabindex', '-1');
+      }
     } else {
       wrapper.appendChild(template);
     }
@@ -123,10 +147,36 @@ export function createMidnight(
     match.dispatchEvent(new MouseEvent('click', event));
   }
 
+  function onFocusIn(event: FocusEvent): void {
+    const target = event.target as Element;
+    const [original, ...clones] = variants;
+
+    const clone = clones.find((c) => c.wrapper.contains(target));
+    if (clone) {
+      const match = matchingElement(target, clone.wrapper, original.wrapper) as HTMLElement | undefined;
+      match?.focus({ preventScroll: true });
+      return;
+    }
+
+    if (!original.wrapper.contains(target) || !target.matches(':focus-visible')) return;
+    for (const c of clones) {
+      matchingElement(target, original.wrapper, c.wrapper)?.setAttribute(FOCUS_ATTR, '');
+    }
+  }
+
+  function onFocusOut(): void {
+    for (const el of element.querySelectorAll(`[${FOCUS_ATTR}]`)) {
+      el.removeAttribute(FOCUS_ATTR);
+    }
+  }
+
   function init(): void {
     const sections = scanSections(instanceName);
     variants = buildVariants();
     window.addEventListener('click', onClick, true);
+    element.addEventListener('focusin', onFocusIn);
+    element.addEventListener('focusout', onFocusOut);
+    addRingRule();
     engine = createEngine({
       element,
       variants,
@@ -167,8 +217,12 @@ export function createMidnight(
   }
 
   function destroy(): void {
+    if (!engine) return;
     window.removeEventListener('click', onClick, true);
-    engine?.destroy();
+    element.removeEventListener('focusin', onFocusIn);
+    element.removeEventListener('focusout', onFocusOut);
+    removeRingRule();
+    engine.destroy();
     engine = null;
     extractLiveContent();
     variants = [];
