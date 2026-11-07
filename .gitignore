@@ -1,7 +1,4 @@
 node_modules
 dist
 demo-dist
-.*/
-!.github/
-*.md
-!README.md
+.scratch/
