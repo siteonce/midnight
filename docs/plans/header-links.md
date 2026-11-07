@@ -1,6 +1,6 @@
 # Make header links work over every section
 
-Status: ready
+Status: in progress
 Human: marcwiest
 Goal: In auto mode, links and buttons in a managed element work with the mouse and keyboard over every section, with no workaround on the site.
 Specs touched: `docs/product/interaction.md` (new), `docs/product/later.md` (new), `docs/product/index.md`, `docs/context.md`
@@ -20,17 +20,29 @@ Every Change's browser evidence comes from Chrome, Firefox and Safari, driven by
 
 ## Phases
 
-Added before building starts, by whoever builds the plan. Until then, it holds only this note and the example below, which the phases replace. A phase that changes code has Tests and Code boxes; any other phase has one Work box:
+### Phase 1: Clones take the mouse · delivers Change 1
+- [ ] Tests: source module exports, run in happy-dom: a clone stays `aria-hidden` but is no longer `inert` or `pointer-events: none`; a plain click on a clone runs a listener on the original, a delegated listener in the bubble and capture phases and an inline `onclick`, once each, with the target in the original; a `preventDefault` in that code reaches the clone's click; a modified click on a clone's link runs no site click code and isn't prevented; a click still passes after `refresh()` and no longer passes after `destroy()`
+- [ ] Code: `src/core.ts` drops `inert` and `pointer-events: none` from clones and passes clone clicks to the matching original element, with the listener removed in `destroy()`
 
-```
-### Phase 1: <name> · delivers Change 1
-- [ ] Tests: <seam>: <behavior the tests assert>
-- [ ] Code: <what makes them pass>
+Notes:
 
-Notes: <added when the phase is done: verification line, deviations, blockers>
+### Phase 2: One tab stop, a mirrored focus ring · delivers Change 2
+- [ ] Tests: source module exports, run in happy-dom: every focusable element in a clone has `tabindex="-1"`, in the original none is added; focus landing on a clone moves to the matching original element; keyboard focus on the original sets `data-midnight-focus-visible` on the matching element in each clone, and focus leaving clears it; focus without `:focus-visible` sets nothing; the default ring rule is present once while an instance lives, and gone after the last `destroy()`
+- [ ] Code: `src/core.ts` sets the clones' `tabindex`, moves focus to the original and mirrors keyboard focus; a zero-specificity default ring rule goes in through `adoptedStyleSheets`, so a strict CSP doesn't block it; listeners and the rule are removed in `destroy()`
 
-### Phase 2: <name> · delivers Change 2
-- [ ] Work: <what it changes, such as docs, config or content>
+Notes:
 
-Notes: <...>
-```
+### Phase 3: The demo drops its workaround · delivers Change 3
+- [ ] Work: `demo/index.html` loses the coordinate fallback and its comment, and keeps the dropdown's direct path. The demo has no test seam, so the browser evidence is the proof, on top of the library tests from Phase 1
+
+Notes:
+
+### Phase 4: Documented limits and README · delivers Change 4
+- [ ] Work: spec text for headless mode and text fields in `docs/product/interaction.md`, `docs/product/later.md` and the spec index; the README's accessibility, headless and why-a-rewrite text matches the new behavior, and shows a custom focus style naming the attribute
+
+Notes:
+
+### Phase 5: Version 0.4.0 · delivers Change 5
+- [ ] Work: `package.json` says `0.4.0`, and the README's CDN links pin `@0.4`
+
+Notes:
