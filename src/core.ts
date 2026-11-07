@@ -112,8 +112,9 @@ export function createMidnight(
 
     event.stopImmediatePropagation();
 
-    const modified = event.metaKey || event.ctrlKey || event.shiftKey || event.altKey;
-    if (modified && target.closest('a[href]')) return;
+    // Safari fires click, not auxclick, for the middle button.
+    const native = event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0;
+    if (native && target.closest('a[href]')) return;
 
     const match = matchingElement(target, clone.wrapper, original.wrapper);
     if (!match) return;
