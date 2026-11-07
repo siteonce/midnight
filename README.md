@@ -9,7 +9,7 @@ Fixed headers (or any fixed/sticky element) that change style as page sections s
 
 A modern, dependency-free rewrite inspired by Aerolab's [midnight.js](https://github.com/Aerolab/midnight.js). Not affiliated with or endorsed by Aerolab.
 
-**~1 kB gzipped** (auto mode) | TypeScript | Adapters for React, Vue, Svelte and Solid
+**~2.4 kB gzipped** (auto mode) | TypeScript | Adapters for React, Vue, Svelte and Solid
 
 **[Live Demo](https://siteonce.github.io/midnight/)**
 
