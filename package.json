@@ -1,7 +1,7 @@
 {
   "name": "@siteonce/midnight",
   "version": "0.4.0",
-  "description": "A modern vanilla JS plugin for fixed headers that change style as you scroll through sections. Zero dependencies. Inspired by Aerolab's midnight.js.",
+  "description": "A dependency-free plugin for fixed and sticky headers that change style as you scroll through page sections. Inspired by Aerolab's midnight.js.",
   "publishConfig": {
     "access": "public"
   },
@@ -9,7 +9,7 @@
     "type": "git",
     "url": "git+https://github.com/siteonce/midnight.git"
   },
-  "homepage": "https://github.com/siteonce/midnight#readme",
+  "homepage": "https://siteonce.github.io/midnight/",
   "bugs": {
     "url": "https://github.com/siteonce/midnight/issues"
   },
@@ -55,11 +55,15 @@
   "keywords": [
     "header",
     "fixed-header",
+    "sticky",
+    "sticky-header",
+    "navbar",
     "scroll",
     "clip-path",
     "navigation",
     "midnight.js",
     "vanilla-js",
+    "typescript",
     "no-dependencies",
     "react",
     "vue",

@@ -5,7 +5,7 @@
 [![CI](https://github.com/siteonce/midnight/actions/workflows/ci.yml/badge.svg)](https://github.com/siteonce/midnight/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Fixed headers (or any fixed/sticky element) that change style as page sections scroll beneath them, with a pixel-perfect wipe at every section boundary.
+Fixed and sticky headers that change style as page sections scroll beneath them, with a pixel-perfect wipe at every section boundary. Any fixed or sticky bar works the same way, including a navbar.
 
 A modern, dependency-free rewrite inspired by Aerolab's [midnight.js](https://github.com/Aerolab/midnight.js). Not affiliated with or endorsed by Aerolab.
 
